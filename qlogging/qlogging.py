@@ -1,9 +1,10 @@
+import os
 import sys
 import logging
 from logging import config
 from typing import Optional, Dict
 
-from colorama import Fore, Back, Style
+from colorama import Fore, Back, Style, init
 
 class ColoredFormatter(logging.Formatter):
     """Colored log formatter."""
@@ -148,5 +149,6 @@ def get_logger(level='info', logfile=None, logfilemode='a',
                     logger_config['formatters'][k]['format'] = "%(color)s"+current_format
             
         config.dictConfig(logger_config)
-    
+    init()
+    os.system("cls" or "clear")
     return logging
