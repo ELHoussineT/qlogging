@@ -4,6 +4,14 @@ Beautifully colored, quick and simple Python logging. This logger is based on [P
 
 [![Build Status](https://img.shields.io/travis/com/jacebrowning/template-python.svg)](https://travis-ci.com/jacebrowning/template-python)
 
+## Screenshots: 
+
+### Terminal/CMD
+![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/terminal.png)
+### Notebooks: 
+![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/notebook.png)
+
+
 ## Features
 
 * Color logging in Terminal and CMD  
@@ -16,10 +24,6 @@ Beautifully colored, quick and simple Python logging. This logger is based on [P
 * Simple and clean one-liner
 * Customizable 
 
-Alternatives:
-
-* [coloredlogs 15.0](https://pypi.org/project/coloredlogs/): does not support coloring in notebooks.
-* [colorlog 5.0.1](https://pypi.org/project/colorlog/): does not support coloring in notebooks.
 
 ## Installation
 
@@ -29,7 +33,7 @@ $ pip install qlogging
 
 ## Examples
 
-Here is an example how to use qlogging: 
+Logging only to console/notebook: 
 
 ```
 import qlogging
@@ -42,7 +46,7 @@ logger.error("This is an error")
 logger.critical("This is a critical")
 ```
 
-will output (%H:%M:%S function_name(),line#| log_message): 
+output (`<time> <function_name>,<line#>| <log_message>`): 
 ```
 12:21:37 foo(),3| This is debug 
 12:21:37 foo(),4| This is info 
@@ -51,12 +55,32 @@ will output (%H:%M:%S function_name(),line#| log_message):
 12:21:37 foo(),7| This is a critical 
 ```
 
-## Screenshots: 
+Logging to console/terminal and a log file (append if log file exists): 
+```
+import qlogging
+logger = qlogging.get_logger(level='debug', logfile='my_log.log')
+```
 
-### Terminal/CMD
-![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/terminal.png)
-### Notebooks: 
-![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/notebook.png)
+Logging to console/terminal and a log file (overwrite if log file exists): 
+```
+import qlogging
+logger = qlogging.get_logger(level='debug', logfile='my_log.log', logfilemode='w')
+```
+
+Logging with `loggingmode='long'` (default is `loggingmode='short'`): 
+```
+import qlogging
+logger = qlogging.get_logger(level='debug', loggingmode='long')
+
+logger.debug("This is debug") 
+```
+output (`<date> <time> | <file_name> | <function_name>,<line#>| <log_message>`): 
+```
+2021-05-18 12:38:22 | <main.py> | <foo()>,4 | This is debug
+```
+
+[Customize format and color](## Easy Customization)
+
 
 
 ## Easy Customization
@@ -99,6 +123,12 @@ def get_logger(level='info', logfile=None, logfilemode='a',
     :return: formated Python logging instance
     """ 
 ```
+
+## Alternatives
+
+* [coloredlogs 15.0](https://pypi.org/project/coloredlogs/): does not support coloring in notebooks.
+* [colorlog 5.0.1](https://pypi.org/project/colorlog/): does not support coloring in notebooks.
+
 ### License
 Copyright (c) 2021 Github Account SinkingTitanic Owner 
 
