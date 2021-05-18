@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
@@ -32,6 +32,7 @@ setup(
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
         "Programming Language :: Python :: 3 :: Only",
-        "Topic :: Logging"
+        "Topic :: System :: Logging",
+        "Topic :: System :: Monitoring"
     ]
 )

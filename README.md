@@ -1,8 +1,11 @@
-# qlogging
+# Python Quick Logging | QLogging
 
 Beautifully colored, quick and simple Python logging. This logger is based on [Python logging package](https://docs.python.org/3/library/logging.html) 
 
-[![Build Status](https://img.shields.io/travis/com/jacebrowning/template-python.svg)](https://travis-ci.com/jacebrowning/template-python)
+[![version](https://img.shields.io/badge/Version-1.0.4-lightgrey)](https://github.com/sinkingtitanic/qlogging)
+[![build](https://img.shields.io/badge/Pypi%20Build-Stable-blue)](https://pypi.org/project/qlogging/)
+[![python-version](https://img.shields.io/badge/Python-3^-success)](https://www.python.org/downloads/)
+[![coverage](https://img.shields.io/badge/coverage-%25100-success)](https://pypi.org/project/qlogging/)
 
 ## Screenshots: 
 
@@ -128,7 +131,8 @@ def get_logger(level='info', logfile=None, logfilemode='a',
 * [coloredlogs 15.0](https://pypi.org/project/coloredlogs/): does not support coloring in notebooks.
 * [colorlog 5.0.1](https://pypi.org/project/colorlog/): does not support coloring in notebooks.
 
-### License
+## License
+MIT License
 Copyright (c) 2021 Github Account SinkingTitanic Owner 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
