@@ -165,6 +165,10 @@ def get_logger(level='info', logfile=None, logfilemode='a',
 * [coloredlogs 15.0](https://pypi.org/project/coloredlogs/): does not support coloring in notebooks.
 * [colorlog 5.0.1](https://pypi.org/project/colorlog/): does not support coloring in notebooks.
 
+## Credit: 
+* [colorama](https://github.com/tartley/colorama)
+* [joshbode](https://gist.github.com/joshbode/58fac7ababc700f51e2a9ecdebe563ad)
+
 ## License
 MIT License
 Copyright (c) 2021 Github Account SinkingTitanic Owner 
