@@ -79,7 +79,7 @@ output (`<date> <time> | <file_name> | <function_name>,<line#>| <log_message>`):
 2021-05-18 12:38:22 | <main.py> | <foo()>,4 | This is debug
 ```
 
-[Customize format and color](## Easy Customization)
+[Customize format and color](##Easy-Customization)
 
 
 
