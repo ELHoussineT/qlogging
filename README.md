@@ -122,6 +122,40 @@ def get_logger(level='info', logfile=None, logfilemode='a',
                             'ERROR': Fore.RED + Style.BRIGHT,
                             'CRITICAL': Fore.RED + Back.WHITE + Style.BRIGHT,
                         }
+    :param logger_config: (DEFAULT=None) dict python logger config if you want to fully overwrite configs. example: 
+                        {
+                            "version": 1,
+                            "disable_existing_loggers": False,
+                            "formatters": {
+                                "qlog": {
+                                    "()": "qlogging.qlogging.ColoredFormatter",
+                                    "colors":  {
+                                        'DEBUG': Fore.CYAN + Style.BRIGHT,
+                                        'INFO': Fore.GREEN + Style.BRIGHT,
+                                        'WARNING': Fore.YELLOW + Style.BRIGHT,
+                                        'ERROR': Fore.RED + Style.BRIGHT,
+                                        'CRITICAL': Fore.RED + Back.WHITE + Style.BRIGHT,
+                                    },
+                                    "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+                                    "datefmt":'%H:%M:%S'
+                                },
+                            },
+                            "handlers": {
+                                "console": {
+                                    "level": "DEBUG",
+                                    "formatter": "qlog",
+                                    "class": "logging.StreamHandler",
+                                    "stream": "ext://sys.stdout",
+                                },
+                            },
+                            "loggers": {
+                                "": {
+                                    "handlers": ["console"],
+                                    "level": "DEBUG",
+                                    "propagate": True,
+                                },
+                            },
+                        }
     :return: formated Python logging instance
     """ 
 ```

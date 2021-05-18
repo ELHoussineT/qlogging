@@ -1,5 +1,6 @@
 import sys
 import logging
+from logging import config
 from typing import Optional, Dict
 
 from colorama import Fore, Back, Style
@@ -24,7 +25,7 @@ class ColoredFormatter(logging.Formatter):
     
     
 def get_logger(level='info', logfile=None, logfilemode='a', 
-               loggingmode="short", format_str=None, format_date=None, colors=None): 
+               loggingmode="short", format_str=None, format_date=None, colors=None, logger_config=None): 
     """
     returns Python logging based logger formatted with colors
 
@@ -54,6 +55,40 @@ def get_logger(level='info', logfile=None, logfilemode='a',
                             'WARNING': Fore.YELLOW + Style.BRIGHT,
                             'ERROR': Fore.RED + Style.BRIGHT,
                             'CRITICAL': Fore.RED + Back.WHITE + Style.BRIGHT,
+                        }
+    :param logger_config: (DEFAULT=None) dict python logger config if you want to fully overwrite configs. example: 
+                        {
+                            "version": 1,
+                            "disable_existing_loggers": False,
+                            "formatters": {
+                                "qlog": {
+                                    "()": "qlogging.qlogging.ColoredFormatter",
+                                    "colors":  {
+                                        'DEBUG': Fore.CYAN + Style.BRIGHT,
+                                        'INFO': Fore.GREEN + Style.BRIGHT,
+                                        'WARNING': Fore.YELLOW + Style.BRIGHT,
+                                        'ERROR': Fore.RED + Style.BRIGHT,
+                                        'CRITICAL': Fore.RED + Back.WHITE + Style.BRIGHT,
+                                    },
+                                    "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+                                    "datefmt":'%H:%M:%S'
+                                },
+                            },
+                            "handlers": {
+                                "console": {
+                                    "level": "DEBUG",
+                                    "formatter": "qlog",
+                                    "class": "logging.StreamHandler",
+                                    "stream": "ext://sys.stdout",
+                                },
+                            },
+                            "loggers": {
+                                "": {
+                                    "handlers": ["console"],
+                                    "level": "DEBUG",
+                                    "propagate": True,
+                                },
+                            },
                         }
     :return: formated Python logging instance
     """ 
@@ -104,5 +139,14 @@ def get_logger(level='info', logfile=None, logfilemode='a',
     }
     
     logger.setLevel(levels.get(level))
+
+    if logger_config != None: 
+        for k, v in logger_config.get('formatters').items():
+            if logger_config.get('formatters').get(k).get('format'): 
+                if not "color" in logger_config.get('formatters').get(k).get('format') : 
+                    current_format = logger_config.get('formatters').get(k).get('format')
+                    logger_config['formatters'][k]['format'] = "%(color)s"+current_format
+            
+        config.dictConfig(logger_config)
     
     return logging
