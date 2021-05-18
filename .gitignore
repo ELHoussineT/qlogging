@@ -1,0 +1,6 @@
+.ipynb_checkpoints/
+__pycache__/
+qlogging/__pycache__/
+qlogging.egg-info/
+dist/
+qlogging-notebook.ipynb
