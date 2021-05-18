@@ -54,19 +54,19 @@ output (`<time> <function_name>,<line#>| <log_message>`):
 12:21:37 foo(),6| This is an error 
 12:21:37 foo(),7| This is a critical 
 ```
-
+____
 Logging to console/terminal and a log file (append if log file exists): 
 ```
 import qlogging
 logger = qlogging.get_logger(level='debug', logfile='my_log.log')
 ```
-
+____
 Logging to console/terminal and a log file (overwrite if log file exists): 
 ```
 import qlogging
 logger = qlogging.get_logger(level='debug', logfile='my_log.log', logfilemode='w')
 ```
-
+____
 Logging with `loggingmode='long'` (default is `loggingmode='short'`): 
 ```
 import qlogging
@@ -79,7 +79,6 @@ output (`<date> <time> | <file_name> | <function_name>,<line#>| <log_message>`):
 2021-05-18 12:38:22 | <main.py> | <foo()>,4 | This is debug
 ```
 
-[Customize format and color](##Easy-Customization)
 
 
 
