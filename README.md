@@ -13,6 +13,8 @@ Beautifully colored, quick and simple Python logging. This logger is based on [P
 ![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/terminal.png)
 ### Notebooks: 
 ![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/notebook.png)
+### Windows: 
+![Preview](https://raw.githubusercontent.com/sinkingtitanic/qlogging/main/screenshots/windows.png)
 
 
 ## Features
