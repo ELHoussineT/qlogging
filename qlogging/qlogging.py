@@ -140,15 +140,18 @@ def get_logger(level='info', logfile=None, logfilemode='a',
     }
     
     logger.setLevel(levels.get(level))
+    try: 
+        if logger_config != None: 
+            for k, v in logger_config.get('formatters').items():
+                if logger_config.get('formatters').get(k).get('format'): 
+                    if not "color" in logger_config.get('formatters').get(k).get('format') : 
+                        current_format = logger_config.get('formatters').get(k).get('format')
+                        logger_config['formatters'][k]['format'] = "%(color)s"+current_format
+                
+            config.dictConfig(logger_config)
+        init() # for windows support 
+        os.system("cls" or "clear") # for windows support 
+    except: 
+        pass
 
-    if logger_config != None: 
-        for k, v in logger_config.get('formatters').items():
-            if logger_config.get('formatters').get(k).get('format'): 
-                if not "color" in logger_config.get('formatters').get(k).get('format') : 
-                    current_format = logger_config.get('formatters').get(k).get('format')
-                    logger_config['formatters'][k]['format'] = "%(color)s"+current_format
-            
-        config.dictConfig(logger_config)
-    init()
-    os.system("cls" or "clear")
     return logging
