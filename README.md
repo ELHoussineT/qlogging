@@ -38,7 +38,7 @@ $ pip install qlogging
 
 ## Examples
 
-Logging only to console/notebook: 
+### Logging only to console/notebook: 
 
 ```
 import qlogging
@@ -51,7 +51,7 @@ logger.error("This is an error")
 logger.critical("This is a critical")
 ```
 
-output (`<time> <function_name>,<line#>| <log_message>`): 
+Output (output format: `<time> <function_name>,<line#>| <log_message>`): 
 ```
 12:21:37 foo(),3| This is debug 
 12:21:37 foo(),4| This is info 
@@ -60,26 +60,26 @@ output (`<time> <function_name>,<line#>| <log_message>`):
 12:21:37 foo(),7| This is a critical 
 ```
 ____
-Logging to console/terminal and a log file (append if log file exists): 
+### Logging to console/terminal and a log file (append if log file exists): 
 ```
 import qlogging
 logger = qlogging.get_logger(level='debug', logfile='my_log.log')
 ```
 ____
-Logging to console/terminal and a log file (overwrite if log file exists): 
+### Logging to console/terminal and a log file (overwrite if log file exists): 
 ```
 import qlogging
 logger = qlogging.get_logger(level='debug', logfile='my_log.log', logfilemode='w')
 ```
 ____
-Logging with `loggingmode='long'` (default is `loggingmode='short'`): 
+### Logging with `loggingmode='long'` (default is `loggingmode='short'`): 
 ```
 import qlogging
 logger = qlogging.get_logger(level='debug', loggingmode='long')
 
 logger.debug("This is debug") 
 ```
-output (`<date> <time> | <file_name> | <function_name>,<line#>| <log_message>`): 
+Output (output format: `<date> <time> | <file_name> | <function_name>,<line#>| <log_message>`): 
 ```
 2021-05-18 12:38:22 | <main.py> | <foo()>,4 | This is debug
 ```
