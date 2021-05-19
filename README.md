@@ -51,7 +51,7 @@ logger.error("This is an error")
 logger.critical("This is a critical")
 ```
 
-output (`<time> <function_name>,<line#>| <log_message>`): 
+### output (`<time> <function_name>,<line#>| <log_message>`): 
 ```
 12:21:37 foo(),3| This is debug 
 12:21:37 foo(),4| This is info 
