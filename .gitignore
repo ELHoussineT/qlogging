@@ -4,3 +4,4 @@ qlogging/__pycache__/
 qlogging.egg-info/
 dist/
 qlogging-notebook.ipynb
+publish.sh

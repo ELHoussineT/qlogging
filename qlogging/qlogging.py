@@ -1,6 +1,7 @@
 import os
 import sys
 import logging
+from importlib import reload
 from logging import config
 from typing import Optional, Dict
 
@@ -119,6 +120,9 @@ def get_logger(level='info', logfile=None, logfilemode='a',
     else: 
         print(" + Error, unknown logging mode {}, please choose: short/long/manual".format(loggingmode))
     
+    # reseting current logger config 
+    logging.handlers = []
+    
     formatter = ColoredFormatter(format_str,style='{', datefmt=format_date,colors=colors)
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
@@ -149,9 +153,9 @@ def get_logger(level='info', logfile=None, logfilemode='a',
                         logger_config['formatters'][k]['format'] = "%(color)s"+current_format
                 
             config.dictConfig(logger_config)
-        init() # for windows support 
         os.system("cls" or "clear") # for windows support 
     except: 
         pass
 
-    return logging
+    return logger
+
