@@ -5,4 +5,6 @@ qlogging.egg-info/
 dist/
 qlogging-notebook.ipynb
 publish.sh
+test.py
+test_log.log
 =*

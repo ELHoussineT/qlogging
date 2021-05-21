@@ -35,6 +35,7 @@ def get_logger(
     logfilemode="a",
     loggingmode="short",
     format_str=None,
+    file_format_str=None,
     format_date=None,
     colors=None,
     logger_config=None,
@@ -54,11 +55,13 @@ def get_logger(
                         'a': appends to logfile
                         'w': overwrites logfile
     :param loggingmode: (DEFAULT='short') str logging mode to be selected. options:
-                        'short': will use short str format ('{color}{asctime} {funcName},{lineno}| {message} {reset}') and short date format ('%H:%M:%S')
-                        'medium': will use long str format ('color}{asctime} | {filename:8} | {funcName},{lineno} | {message}{reset}') and long date format ('%Y-%m-%d %H:%M:%S')
+                        'short': will use short str format ('%(asctime)s %(funcName)s,%(lineno)s| %(message)s') and short date format ('%H:%M:%S')
+                        'medium': will use long str format ('%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s') and long date format ('%Y-%m-%d %H:%M:%S')
                         'manual': you need to set :param format_str: and :param format_date: yourself
-    :param format_str: (DEFAULT=None) str of format logging string, only set this if you selected :param loggingmode: as 'manual'. example:
-                        'color}{asctime} | {filename:8} | {funcName},{lineno} | {message}{reset}'
+    :param format_str: (DEFAULT=None) str of format logging string for console, only set this if you selected :param loggingmode: as 'manual'. example (the style is always '%', see python logging module for more info):
+                        '%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s'
+    :param file_format_str: (DEFAULT=None) str of format logging string for logfile (if you keep it None, we will use what you passed in :param format_str:), only set this if you selected :param loggingmode: as 'manual'. example (the style is always '%', see python logging module for more info):
+                        '%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s'
     :param date_str: (DEFAULT=None) str of date logging string, only set this if you selected :param loggingmode: as 'manual'. example:
                         '%Y-%m-%d %H:%M:%S'
     :param colors: (DEFAULT=None) dict of color settings, only set this if you selected :param loggingmode: as 'manual'. example:
@@ -105,10 +108,9 @@ def get_logger(
                         }
     :return: formated Python logging instance
     """
-    file_format_str = ""
     if loggingmode == "short":
-        format_str = "{color}{asctime} {funcName},{lineno}| {message}"
-        file_format_str = "{asctime} {funcName},{lineno}| {message}"
+        file_format_str = "%(asctime)s %(funcName)s,%(lineno)s| %(message)s"
+        format_str = "%(color)s"+file_format_str+"%(reset)s"
         format_date = "%H:%M:%S"
         colors = {
             "DEBUG": Fore.CYAN + Style.BRIGHT,
@@ -118,12 +120,8 @@ def get_logger(
             "CRITICAL": Fore.RED + Back.WHITE + Style.BRIGHT,
         }
     elif loggingmode == "long":
-        format_str = (
-            "{color}{asctime} | {filename:8} | {funcName},{lineno} | {message}"
-        )
-        file_format_str = (
-            "{asctime} | {filename:8} | {funcName},{lineno} | {message}"
-        )
+        file_format_str = "%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s"
+        format_str = "%(color)s"+file_format_str+"%(reset)s"
         format_date = "%Y-%m-%d %H:%M:%S"
         colors = {
             "DEBUG": Fore.CYAN + Style.BRIGHT,
@@ -133,7 +131,9 @@ def get_logger(
             "CRITICAL": Fore.RED + Back.WHITE + Style.BRIGHT,
         }
     elif loggingmode == "manual":
-        pass
+        if file_format_str == None: 
+            file_format_str = format_str
+        format_str = '%(color)s'+format_str+"%(reset)s"
     else:
         print(
             " + Error, unknown logging mode {}, please choose: short/long/manual".format(
@@ -145,10 +145,10 @@ def get_logger(
     logging.handlers = []
 
     formatter = ColoredFormatter(
-        format_str, style="{", datefmt=format_date, colors=colors
+        format_str, style="%", datefmt=format_date, colors=colors
     )
     file_formatter = ColoredFormatter(
-        file_format_str, style="{", datefmt=format_date, colors=colors
+        file_format_str, style="%", datefmt=format_date, colors=colors
     )
     handler = logging.StreamHandler(sys.stdout)
     handler.setFormatter(formatter)
@@ -182,11 +182,12 @@ def get_logger(
                             logger_config.get("formatters").get(k).get("format")
                         )
                         logger_config["formatters"][k]["format"] = (
-                            "%(color)s" + current_format
+                            "%(color)s" + current_format + "%(reset)s"
                         )
 
             config.dictConfig(logger_config)
-        os.system("cls" or "clear")  # for windows support
+        if os.name == 'nt': 
+            os.system("cls" or "clear")  # for windows support
     except:
         pass
 
