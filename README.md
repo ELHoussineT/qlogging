@@ -2,7 +2,7 @@
 
 Beautifully colored, quick and simple Python logging. This logger is based on [Python logging package](https://docs.python.org/3/library/logging.html) 
 
-[![version](https://img.shields.io/badge/Version-1.2.7-lightgrey)](https://github.com/sinkingtitanic/qlogging)
+[![version](https://img.shields.io/badge/Version-1.2.8-lightgrey)](https://github.com/sinkingtitanic/qlogging)
 [![build](https://img.shields.io/badge/Pypi%20Build-Stable-blue)](https://pypi.org/project/qlogging/)
 [![python-version](https://img.shields.io/badge/Python-3^-success)](https://www.python.org/downloads/)
 [![coverage](https://img.shields.io/badge/coverage-%25100-success)](https://pypi.org/project/qlogging/)
@@ -92,31 +92,42 @@ Output (output format: `<date> <time> | <file_name> | <function_name>,<line#>| <
 Customize your logger based on the following `get_logger()` function parameters 
 
 ```
-def get_logger(level='info', logfile=None, logfilemode='a', 
-               loggingmode="short", format_str=None, format_date=None, colors=None): 
+def get_logger(
+    level="info",
+    logfile=None,
+    logfilemode="a",
+    loggingmode="short",
+    format_str=None,
+    file_format_str=None,
+    format_date=None,
+    colors=None,
+    logger_config=None,
+):
     """
     returns Python logging based logger formatted with colors
 
-    :param level: (DEFAULT='info') str of logging level, each str option is mapped to Python logging levels, str options: 
+    :param level: (DEFAULT='info') str of logging level, each str option is mapped to Python logging levels, str options:
                         'info': logging.INFO,
-                        'debug': logging.DEBUG, 
-                        'warning': logging.WARNING, 
-                        'error': logging.ERROR, 
+                        'debug': logging.DEBUG,
+                        'warning': logging.WARNING,
+                        'error': logging.ERROR,
                         'critical': logging.CRITICAL,
                         'notset': logging.NOTSET
     :param logfile: (DEFAULT=None) str path where to save log file, example: '/tmp/my_log.log'
-    :param logfilemode: (DEFAULT='a') str of log file writing mode, same as the ones documented at Python logging package. options: 
-                        'a': appends to logfile 
-                        'w': overwrites logfile 
-    :param loggingmode: (DEFAULT='short') str logging mode to be selected. options: 
-                        'short': will use short str format ('{color}{asctime} {funcName},{lineno}| {message} {reset}') and short date format ('%H:%M:%S')
-                        'medium': will use long str format ('color}{asctime} | {filename:8} | {funcName},{lineno} | {message}{reset}') and long date format ('%Y-%m-%d %H:%M:%S')
+    :param logfilemode: (DEFAULT='a') str of log file writing mode, same as the ones documented at Python logging package. options:
+                        'a': appends to logfile
+                        'w': overwrites logfile
+    :param loggingmode: (DEFAULT='short') str logging mode to be selected. options:
+                        'short': will use short str format ('%(asctime)s %(funcName)s,%(lineno)s| %(message)s') and short date format ('%H:%M:%S')
+                        'medium': will use long str format ('%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s') and long date format ('%Y-%m-%d %H:%M:%S')
                         'manual': you need to set :param format_str: and :param format_date: yourself
-    :param format_str: (DEFAULT=None) str of format logging string, only set this if you selected :param loggingmode: as 'manual'. example: 
-                        'color}{asctime} | {filename:8} | {funcName},{lineno} | {message}{reset}'
-    :param date_str: (DEFAULT=None) str of date logging string, only set this if you selected :param loggingmode: as 'manual'. example: 
+    :param format_str: (DEFAULT=None) str of format logging string for console, only set this if you selected :param loggingmode: as 'manual'. example (the style is always '%', see python logging module for more info):
+                        '%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s'
+    :param file_format_str: (DEFAULT=None) str of format logging string for logfile (if you keep it None, we will use what you passed in :param format_str:), only set this if you selected :param loggingmode: as 'manual'. example (the style is always '%', see python logging module for more info):
+                        '%(asctime)s | %(filename)s | %(funcName)s,%(lineno)s | %(message)s'
+    :param date_str: (DEFAULT=None) str of date logging string, only set this if you selected :param loggingmode: as 'manual'. example:
                         '%Y-%m-%d %H:%M:%S'
-    :param colors: (DEFAULT=None) dict of color settings, only set this if you selected :param loggingmode: as 'manual'. example: 
+    :param colors: (DEFAULT=None) dict of color settings, only set this if you selected :param loggingmode: as 'manual'. example:
                         {
                             'DEBUG': Fore.CYAN + Style.BRIGHT,
                             'INFO': Fore.GREEN + Style.BRIGHT,
@@ -124,7 +135,7 @@ def get_logger(level='info', logfile=None, logfilemode='a',
                             'ERROR': Fore.RED + Style.BRIGHT,
                             'CRITICAL': Fore.RED + Back.WHITE + Style.BRIGHT,
                         }
-    :param logger_config: (DEFAULT=None) dict python logger config if you want to fully overwrite configs. example: 
+    :param logger_config: (DEFAULT=None) dict python logger config if you want to fully overwrite configs. example:
                         {
                             "version": 1,
                             "disable_existing_loggers": False,
@@ -159,7 +170,7 @@ def get_logger(level='info', logfile=None, logfilemode='a',
                             },
                         }
     :return: formated Python logging instance
-    """ 
+    """
 ```
 
 ## Alternatives
